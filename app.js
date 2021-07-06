@@ -7,43 +7,7 @@ class Book {
   }
 }
 
-// UI Class: Handle UI Tasks
-class UI {
-  static displayBooks() {
-    const books = Store.getBooks();
-
-    books.forEach((book) => UI.addBookToList(book));
-  }
-
-  static addBookToList(book) {
-    const list = document.querySelector('#book-list');
-
-    const lItem = document.createElement('li');
-
-    lItem.innerHTML = `
-      <p>${book.title}</p>
-      <p>${book.author}</p>
-      <p>${book.id}</p>
-      <p><a href="#">Remove</a></p>
-    `;
-
-    list.appendChild(lItem);
-  }
-
-  static deleteBook(el) {
-    if (el.textContent == 'Remove') {
-      el.parentElement.parentElement.remove();
-    }
-  }
-
-  static clearFields() {
-    document.querySelector('#title').value = '';
-    document.querySelector('#author').value = '';
-    document.querySelector('#ID').value = '';
-  }
-}
-
-// Store Class: Handles Storage 
+// Store Class: Handles Storage
 class Store {
   static getBooks() {
     let books;
@@ -75,21 +39,57 @@ class Store {
   }
 }
 
-// Event: Display Books 
+// UI Class: Handle UI Tasks
+class UI {
+  static displayBooks() {
+    const books = Store.getBooks();
+
+    books.forEach((book) => UI.addBookToList(book));
+  }
+
+  static addBookToList(book) {
+    const list = document.querySelector('#book-list');
+
+    const lItem = document.createElement('li');
+
+    lItem.innerHTML = `
+      <p>${book.title}</p>
+      <p>${book.author}</p>
+      <p>${book.id}</p>
+      <p><a href="#">Remove</a></p>
+    `;
+
+    list.appendChild(lItem);
+  }
+
+  static deleteBook(el) {
+    if (el.textContent === 'Remove') {
+      el.parentElement.parentElement.remove();
+    }
+  }
+
+  static clearFields() {
+    document.querySelector('#title').value = '';
+    document.querySelector('#author').value = '';
+    document.querySelector('#ID').value = '';
+  }
+}
+
+// Event: Display Books
 document.addEventListener('DOMContentLoaded', UI.displayBooks);
 
-// Event: Add a Book 
+// Event: Add a Book
 document.querySelector('#book-form').addEventListener('submit', (e) => {
   // Prevent actual submit
   e.preventDefault();
 
-  // Get form values 
+  // Get form values
   const title = document.querySelector('#title').value;
   const author = document.querySelector('#author').value;
   const id = document.querySelector('#ID').value;
 
   // Validate
-  if (title === '' || author === '' || ID === '') {
+  if (title === '' || author === '' || id === '') {
     alert('Please fill in all fields');
   } else {
     // Instantiate book
