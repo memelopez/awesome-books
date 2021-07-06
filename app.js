@@ -69,7 +69,7 @@ class UI {
   }
 
   static clearFields() {
-    document.getElementById("book-form").reset();
+    document.getElementById('book-form').reset();
   }
 }
 
