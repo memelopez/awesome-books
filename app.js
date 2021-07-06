@@ -79,44 +79,44 @@ class Store {
 document.addEventListener('DOMContentLoaded', UI.displayBooks);
 
 // Event: Add a Book 
-// document.querySelector('#book-form').addEventListener('submit', (e) => {
-//   // Prevent actual submit
-//   e.preventDefault();
+document.querySelector('#book-form').addEventListener('submit', (e) => {
+  // Prevent actual submit
+  e.preventDefault();
 
-//   // Get form values 
-//   const title = document.querySelector('#title').value;
-//   const author = document.querySelector('#author').value;
-//   const id = document.querySelector('#ID').value;
+  // Get form values 
+  const title = document.querySelector('#title').value;
+  const author = document.querySelector('#author').value;
+  const id = document.querySelector('#ID').value;
 
-//   // Validate
-//   if (title === '' || author === '' || ID === '') {
-//     alert('Please fill in all fields');
-//   } else {
-//     // Instantiate book
-//     const book = new Book(title, author, id);
+  // Validate
+  if (title === '' || author === '' || ID === '') {
+    alert('Please fill in all fields');
+  } else {
+    // Instantiate book
+    const book = new Book(title, author, id);
 
-//     // Add Book to UI
-//     UI.addBookToList(book);
+    // Add Book to UI
+    UI.addBookToList(book);
 
-//     // Add book to store
-//     Store.addBook(book);
+    // Add book to store
+    Store.addBook(book);
 
-//     // Show success message
-//     alert('Book Added');
+    // Show success message
+    alert('Book Added');
 
-//     // Clear fields
-//     UI.clearFields();
-//   }
-// });
+    // Clear fields
+    UI.clearFields();
+  }
+});
 
-// // Event: Remove a Book
-// document.querySelector('#book-list').addEventListener('click', (e) => {
-//   // Remove book from UI
-//   UI.deleteBook(e.target);
+// Event: Remove a Book
+document.querySelector('#book-list').addEventListener('click', (e) => {
+  // Remove book from UI
+  UI.deleteBook(e.target);
 
-//   // Remove book from the store
-//   Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+  // Remove book from the store
+  Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 
-//   // Show success message
-//   alert('Book Removed');
-// });
+  // Show success message
+  alert('Book Removed');
+});
