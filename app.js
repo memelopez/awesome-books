@@ -81,11 +81,9 @@ class UI {
   }
 
   static clearFields() {
-
     document.querySelector('#title').value = '';
     document.querySelector('#author').value = '';
     document.querySelector('#id').value = '';
-
   }
 }
 
