@@ -11,7 +11,7 @@ class Book {
 class Store {
   static getBooks() {
     let books;
-    if(localStorage.getItem('books') === null) {
+    if (localStorage.getItem('books') === null) {
       books = [];
     } else {
       books = JSON.parse(localStorage.getItem('books'));
@@ -30,7 +30,7 @@ class Store {
     const books = Store.getBooks();
 
     books.forEach((book, index) => {
-      if(book.id === id) {
+      if (book.id === id) {
         books.splice(index, 1);
       }
     });
@@ -63,7 +63,7 @@ class UI {
   }
 
   static deleteBook(el) {
-    if(el.classList.contains('delete')) {
+    if (el.classList.contains('delete')) {
       el.parentElement.parentElement.remove();
     }
   }
@@ -101,7 +101,7 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
   const id = document.querySelector('#id').value;
 
   // Validate
-  if(title === '' || author === '' || id === '') {
+  if (title === '' || author === '' || id === '') {
     UI.showAlert('Please fill in all fields', 'danger');
   } else {
     // Instatiate book
