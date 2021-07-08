@@ -44,6 +44,11 @@ class UI {
     const books = Store.getBooks();
 
     books.forEach((book) => UI.addBookToList(book));
+
+    const DateTime = luxon.DateTime;
+    const now = DateTime.now();
+
+    console.log(now.toLocaleString(DateTime.DATETIME_MED));
   }
 
   static addBookToList(book) {
