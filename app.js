@@ -56,10 +56,8 @@ class UI {
       <a href="#" class="btn btn-outline-primary btn-sm bg-white">Remove</a>
     `;
 
-    item.classList.add("d-flex");
-    item.classList.add("justify-content-between");
-
-
+    item.classList.add('d-flex');
+    item.classList.add('justify-content-between');
     list.appendChild(item);
   }
 
