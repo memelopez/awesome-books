@@ -16,7 +16,7 @@ Book list app. Capable of displaying the current book list, adding and removing 
 
 ## Live Demo
 
-[Live Demo Link](https://memelopez.github.io/awesome-books/#
+[Live Demo Link](https://memelopez.github.io/awesome-books/#)
 
 
 ## Getting Started
