@@ -4,7 +4,7 @@
 
 > An application of a book list.
 
-<img src="https://user-images.githubusercontent.com/6587226/124958163-1482a100-dfd7-11eb-8df8-199229619ec1.png" width="700">
+<img src="https://user-images.githubusercontent.com/43843720/124982660-a1f9db80-e03f-11eb-897b-15c3479cb416.png" width="700">
 
 Book list app. Capable of displaying the current book list, adding and removing books, and storing the list in local storage. 
 
