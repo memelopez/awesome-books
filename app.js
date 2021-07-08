@@ -1,9 +1,8 @@
 // Book Class: Represents a Book
 class Book {
-  constructor(title, author, id) {
+  constructor(title, author) {
     this.title = title;
     this.author = author;
-    this.id = id;
   }
 }
 
@@ -26,14 +25,14 @@ class Store {
     localStorage.setItem('books', JSON.stringify(books));
   }
 
-  static removeBook(id) {
+  static removeBook(index) {
     const books = Store.getBooks();
 
-    books.forEach((book, index) => {
-      if (book.id === id) {
-        books.splice(index, 1);
-      }
-    });
+    // books.forEach((book, index) => {
+    //   if (index === i) {
+    books.splice(index, 1);
+    //   }
+    // });
 
     localStorage.setItem('books', JSON.stringify(books));
   }
@@ -50,21 +49,23 @@ class UI {
   static addBookToList(book) {
     const list = document.querySelector('#book-list');
 
-    const row = document.createElement('tr');
+    const item = document.createElement('li');
 
-    row.innerHTML = `
-      <td>${book.title}</td>
-      <td>${book.author}</td>
-      <td>${book.id}</td>
-      <td><a href="#" class="btn btn-outline-primary btn-sm">Remove</a></td>
+    item.innerHTML = `
+      <p>"${book.title}" by ${book.author}</p>
+      <a href="#" class="btn btn-outline-primary btn-sm bg-white">Remove</a>
     `;
 
-    list.appendChild(row);
+    item.classList.add("d-flex");
+    item.classList.add("justify-content-between");
+
+
+    list.appendChild(item);
   }
 
   static deleteBook(el) {
-    if (el.classList.contains('delete')) {
-      el.parentElement.parentElement.remove();
+    if (el.textContent === 'Remove') {
+      el.parentElement.remove();
     }
   }
 
@@ -73,8 +74,8 @@ class UI {
     div.className = `alert alert-${className}`;
     div.appendChild(document.createTextNode(message));
     const container = document.querySelector('.container');
-    const form = document.querySelector('#book-form');
-    container.insertBefore(div, form);
+    const div2 = document.querySelector('#div4list');
+    container.insertBefore(div, div2);
 
     // Vanish in 3 seconds
     setTimeout(() => document.querySelector('.alert').remove(), 3000);
@@ -83,7 +84,6 @@ class UI {
   static clearFields() {
     document.querySelector('#title').value = '';
     document.querySelector('#author').value = '';
-    document.querySelector('#id').value = '';
   }
 }
 
@@ -98,14 +98,13 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
   // Get form values
   const title = document.querySelector('#title').value;
   const author = document.querySelector('#author').value;
-  const id = document.querySelector('#id').value;
 
   // Validate
-  if (title === '' || author === '' || id === '') {
+  if (title === '' || author === '') {
     UI.showAlert('Please fill in all fields', 'danger');
   } else {
     // Instatiate book
-    const book = new Book(title, author, id);
+    const book = new Book(title, author);
 
     // Add Book to UI
     UI.addBookToList(book);
@@ -123,11 +122,15 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
 // Event: Remove a Book
 document.querySelector('#book-list').addEventListener('click', (e) => {
+  const ulList = document.querySelector('#book-list');
+  const item2BeRemoved = e.target.parentElement;
+  const nodes = Array.from(ulList.children);
+
   // Remove book from UI
   UI.deleteBook(e.target);
 
   // Remove book from store
-  Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+  Store.removeBook(nodes.indexOf(item2BeRemoved));
 
   // Show success message
   UI.showAlert('Book Removed', 'success');
