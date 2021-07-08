@@ -1,9 +1,8 @@
 // Book Class: Represents a Book
 class Book {
-  constructor(title, author, id) {
+  constructor(title, author) {
     this.title = title;
     this.author = author;
-    this.id = id;
   }
 }
 
@@ -26,14 +25,14 @@ class Store {
     localStorage.setItem('books', JSON.stringify(books));
   }
 
-  static removeBook(id) {
+  static removeBook(index) {
     const books = Store.getBooks();
 
-    books.forEach((book, index) => {
-      if (book.id === id) {
-        books.splice(index, 1);
-      }
-    });
+    // books.forEach((book, index) => {
+    //   if (index === i) {
+    books.splice(index, 1);
+    //   }
+    // });
 
     localStorage.setItem('books', JSON.stringify(books));
   }
@@ -50,26 +49,39 @@ class UI {
   static addBookToList(book) {
     const list = document.querySelector('#book-list');
 
-    const lItem = document.createElement('li');
+    const item = document.createElement('li');
 
-    lItem.innerHTML = `
-      <p>${book.title}</p>
-      <p>${book.author}</p>
-      <p>${book.id}</p>
-      <p><a href="#">Remove</a></p>
+    item.innerHTML = `
+      <p>"${book.title}" by ${book.author}</p>
+      <a href="#" class="btn btn-outline-primary btn-sm bg-white">Remove</a>
     `;
 
-    list.appendChild(lItem);
+    item.classList.add('d-flex');
+    item.classList.add('justify-content-between');
+    list.appendChild(item);
   }
 
   static deleteBook(el) {
     if (el.textContent === 'Remove') {
-      el.parentElement.parentElement.remove();
+      el.parentElement.remove();
     }
   }
 
+  static showAlert(message, className) {
+    const div = document.createElement('div');
+    div.className = `alert alert-${className}`;
+    div.appendChild(document.createTextNode(message));
+    const container = document.querySelector('.container');
+    const div2 = document.querySelector('#div4list');
+    container.insertBefore(div, div2);
+
+    // Vanish in 3 seconds
+    setTimeout(() => document.querySelector('.alert').remove(), 3000);
+  }
+
   static clearFields() {
-    document.getElementById('book-form').reset();
+    document.querySelector('#title').value = '';
+    document.querySelector('#author').value = '';
   }
 }
 
@@ -84,14 +96,13 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
   // Get form values
   const title = document.querySelector('#title').value;
   const author = document.querySelector('#author').value;
-  const id = document.querySelector('#ID').value;
 
   // Validate
-  if (title === '' || author === '' || id === '') {
-    alert('Please fill in all fields');
+  if (title === '' || author === '') {
+    UI.showAlert('Please fill in all fields', 'danger');
   } else {
-    // Instantiate book
-    const book = new Book(title, author, id);
+    // Instatiate book
+    const book = new Book(title, author);
 
     // Add Book to UI
     UI.addBookToList(book);
@@ -100,7 +111,7 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     Store.addBook(book);
 
     // Show success message
-    alert('Book Added');
+    UI.showAlert('Book Added', 'success');
 
     // Clear fields
     UI.clearFields();
@@ -109,12 +120,16 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
 // Event: Remove a Book
 document.querySelector('#book-list').addEventListener('click', (e) => {
+  const ulList = document.querySelector('#book-list');
+  const item2BeRemoved = e.target.parentElement;
+  const nodes = Array.from(ulList.children);
+
   // Remove book from UI
   UI.deleteBook(e.target);
 
-  // Remove book from the store
-  Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+  // Remove book from store
+  Store.removeBook(nodes.indexOf(item2BeRemoved));
 
   // Show success message
-  alert('Book Removed');
+  UI.showAlert('Book Removed', 'success');
 });
